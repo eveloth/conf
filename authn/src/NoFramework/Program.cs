@@ -3,6 +3,8 @@ using NoFramework;
 
 var db = new Database();
 
+#region Framework stuff
+
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
@@ -14,6 +16,8 @@ app.UseStaticFiles(
             context.Context.Response.Headers.Add("cache-control", "no cache")
     }
 );
+
+#endregion
 
 app.MapPost(
     "/register",
@@ -85,7 +89,7 @@ app.MapPost(
     "/logout",
     async (HttpContext ctx) =>
     {
-        // удаляем куку - то есть, просто прописываем ей пустое значение после '='
+        // удаляем куку - то есть, просто прописываем ей пустое значение после '=' и дату экспирации в прошлом
         ctx.Response.Headers["set-cookie"] = "authn=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 
         return Results.Ok();

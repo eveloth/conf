@@ -3,7 +3,6 @@
 public class Database
 {
     private static readonly List<User> Users = new();
-    private static int _index;
 
     public User? this[int i] => Users.FirstOrDefault(x => x.Id == i);
 
@@ -11,14 +10,23 @@ public class Database
 
     public User Add(User user)
     {
-        _index++;
-        user.Id = _index;
         Users.Add(user);
         return Users.Last();
     }
 }
 
-public record User(string Username, string Password)
+public record User
 {
-    public int Id { get; set; }
+    private static int _index;
+
+    public User(string Username, string Password)
+    {
+        this.Username = Username;
+        this.Password = Password;
+        Id = ++_index;
+    }
+
+    public int Id { get; init; }
+    public string Username { get; }
+    public string Password { get; }
 }
