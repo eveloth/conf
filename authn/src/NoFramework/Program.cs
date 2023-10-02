@@ -49,6 +49,7 @@ app.MapPost(
 
         #endregion
 
+        // выставляем в заголовок set-cookie строку в виде пары ключ-значение, например 'authn=34'
         ctx.Response.Headers["set-cookie"] = $"authn={user.Id}";
 
         return Results.Ok($"Welcome, {request.Username}!");
